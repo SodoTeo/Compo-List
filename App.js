@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Item, { Task } from './components/Item';
 
 export default function App() {
@@ -8,8 +8,15 @@ export default function App() {
   const [itemItems, setItemItems] = useState([]);
 
   const handleAddItem = ()=> {
+    Keyboard.dismiss();
     setItemItems([...itemItems,item])
     setItem(null);
+  }
+
+  const deleteItem =(index) =>{
+    let itemsCopy = [...itemItems];
+    itemsCopy.splice(index, 1);
+    setItemItems(itemsCopy);
   }
 
   return (
@@ -21,7 +28,11 @@ export default function App() {
           {/* Here will go the components*/}
           {
             itemItems.map((item, index) => {
-              return <Item key={index} text ={item} />
+              return(
+                <TouchableOpacity key={index} onPress={()=> deleteItem(index)}>
+                  <Item text ={item} />
+                </TouchableOpacity>
+              ) 
             })
           }
  
