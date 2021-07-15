@@ -1,6 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Item, { Task } from './components/Item';
 
 export default function App() {
   return (
@@ -10,6 +11,10 @@ export default function App() {
         <Text style={styles.sectionTitle}>Components List</Text>
         <View style={styles.items}>
           {/* Here will go the components*/}
+          <Item text={'Component 1'}/>
+          <Item text={'Component 2'}/>
+          <Item text={'Component 3'}/>
+          <Item text={'Component 4'}/>
         </View>
 
       </View>
