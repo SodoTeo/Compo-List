@@ -1,9 +1,15 @@
 
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React,{useState} from 'react';
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Item, { Task } from './components/Item';
 
 export default function App() {
+  const [item, setItem] = useState();
+
+  const handleAddItem = ()=> {
+    console.log(item);
+  }
+
   return (
     <View style={styles.container}>
       {/*Compo List*/}
@@ -18,6 +24,20 @@ export default function App() {
         </View>
 
       </View>
+
+      {/* Component info add */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.writeItemWrapper}
+      >
+        <TextInput style={styles.input} placeholder={'Add your PC component'} value={item} onChangeText={text => setItem(text)}/>
+        <TouchableOpacity onPress={()=> handleAddItem()}>
+          <View style={styles.addWrapper}>
+            <Text style={styles.addItem}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+
     </View>
   );
 }
@@ -28,12 +48,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5E5',
   },
   composWrapper :{
-    paddingTop: 80,
+    paddingTop: 25,
     paddingHorizontal: 20,
   },
   sectionTitle :{
     fontSize: 24,
     fontWeight: 'bold'
   },
-  items :{},
+  items :{
+    marginTop:30,
+  },
+  writeItemWrapper: {
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  input: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: '#FFF',
+    width: 250,
+    borderColor: '#C0C0C0',
+    borderWidth: 1,
+    borderRadius: 60,
+
+  },
+  addWrapper: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#FFF',
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#C0C0C0',
+    borderWidth: 1,
+  },
+  addItem: {},
 });
