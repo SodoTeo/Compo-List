@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+
 const Item =(props)=>{
     return(
         <View style={styles.item}>
@@ -38,9 +39,9 @@ const styles = StyleSheet.create({
         maxWidth: '80%'
     },
     statusItem: {
-        width: 53,
-        height: 53,
-        left: 35,
+        width: 35,
+        height: 35,
+        left: 15,
         backgroundColor: '#F23030',
         borderRadius: 50,
     },

@@ -1,23 +1,40 @@
-
-import React,{useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Item, { Task } from './components/Item';
+import React, { useState } from "react";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Item, { Task } from "./components/Item";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 export default function App() {
   const [item, setItem] = useState();
   const [itemItems, setItemItems] = useState([]);
 
-  const handleAddItem = ()=> {
+  const handleAddItem = () => {
     Keyboard.dismiss();
-    setItemItems([...itemItems,item])
+    setItemItems([...itemItems, item]);
     setItem(null);
-  }
+  };
 
-  const deleteItem =(index) =>{
+  const deleteItem = (index) => {
     let itemsCopy = [...itemItems];
     itemsCopy.splice(index, 1);
     setItemItems(itemsCopy);
-  }
+  };
+
+  const rightSwipeActions = () => {
+    return (
+        <TouchableOpacity  style={styles.deleteItem} >
+          <Text style={styles.deleteItemText}>Delete</Text>
+        </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -26,18 +43,14 @@ export default function App() {
         <Text style={styles.sectionTitle}>Components List</Text>
         <View style={styles.items}>
           {/* Here will go the components*/}
-          {
-            itemItems.map((item, index) => {
-              return(
-                <TouchableOpacity key={index} onPress={()=> deleteItem(index)}>
-                  <Item text ={item} />
-                </TouchableOpacity>
-              ) 
-            })
-          }
- 
+          {itemItems.map((item, index) => {
+            return (
+              <Swipeable key={index} renderRightActions={rightSwipeActions} onSwipeableRightOpen={() => deleteItem(index)}>
+                  <Item text={item} />
+              </Swipeable>
+            );
+          })}
         </View>
-
       </View>
 
       {/* Component info add */}
@@ -45,14 +58,18 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeItemWrapper}
       >
-        <TextInput style={styles.input} placeholder={'Add your PC component'} value={item} onChangeText={text => setItem(text)}/>
-        <TouchableOpacity onPress={()=> handleAddItem()}>
+        <TextInput
+          style={styles.input}
+          placeholder={"Add your PC component"}
+          value={item}
+          onChangeText={(text) => setItem(text)}
+        />
+        <TouchableOpacity onPress={() => handleAddItem()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addItem}>+</Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     </View>
   );
 }
@@ -60,46 +77,61 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: "#E5E5E5",
   },
-  composWrapper :{
+  composWrapper: {
     paddingTop: 25,
     paddingHorizontal: 20,
   },
-  sectionTitle :{
+  sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
-  items :{
-    marginTop:30,
+  items: {
+    marginTop: 30,
   },
   writeItemWrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     width: 250,
-    borderColor: '#C0C0C0',
+    borderColor: "#C0C0C0",
     borderWidth: 1,
     borderRadius: 60,
-
   },
   addWrapper: {
     width: 60,
     height: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#C0C0C0',
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#C0C0C0",
     borderWidth: 1,
   },
   addItem: {},
+  deleteItem: {
+    width: 100,
+    height: 75,
+    backgroundColor: "#F23030",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    borderRadius: 30,
+    
+  },
+  deleteItemText: {
+    color: "#1b1a17",
+    paddingHorizontal: 10,
+    fontSize: 14,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
 });
