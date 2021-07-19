@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
 import Item, { Task } from "./components/Item";
 
@@ -36,18 +37,20 @@ export default function App() {
       {/*Compo List*/}
       <View style={styles.composWrapper}>
         <Text style={styles.sectionTitle}>Components List</Text>
-        <View style={styles.items}>
-          {/* Here will go the components*/}
-          {itemItems.map((item, index) => {
-            return (
-              <Item
-                key={generateKey(item)}
-                text={item + " index--> " + index}
-                handleDelete={() => deleteItem(index)}
-              />
-            );
-          })}
-        </View>
+        <ScrollView>
+          <View style={styles.items}>
+            {/* Here will go the components*/}
+            {itemItems.map((item, index) => {
+              return (
+                <Item
+                  key={generateKey(item)+index}
+                  text={item + " index--> " + index}
+                  handleDelete={() => deleteItem(index)}
+                />
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
 
       {/* Component info add */}
