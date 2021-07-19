@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import Item, { Task } from "./components/Item";
-import Swipeable from "react-native-gesture-handler/Swipeable";
+
 
 export default function App() {
   const [item, setItem] = useState();
@@ -23,16 +23,17 @@ export default function App() {
   };
 
   const deleteItem = (index) => {
-    let itemsCopy = [...itemItems];
+    let itemsCopy = JSON.parse(JSON.stringify(itemItems));
     itemsCopy.splice(index, 1);
     setItemItems(itemsCopy);
   };
+  
 
   const rightSwipeActions = () => {
     return (
-        <TouchableOpacity  style={styles.deleteItem} >
+        <View  style={styles.deleteItem}  >
           <Text style={styles.deleteItemText}>Delete</Text>
-        </TouchableOpacity>
+        </View>
     );
   };
 
@@ -43,11 +44,9 @@ export default function App() {
         <Text style={styles.sectionTitle}>Components List</Text>
         <View style={styles.items}>
           {/* Here will go the components*/}
-          {itemItems.map((item, index) => {
+          {itemItems.map((items, index) => {
             return (
-              <Swipeable key={index} renderRightActions={rightSwipeActions} onSwipeableRightOpen={() => deleteItem(index)}>
-                  <Item text={item} />
-              </Swipeable>
+                  <Item key={index} text={items} handleDelete={()=> deleteItem(index)} /> 
             );
           })}
         </View>
@@ -118,20 +117,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addItem: {},
-  deleteItem: {
-    width: 100,
-    height: 75,
-    backgroundColor: "#F23030",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    borderRadius: 30,
-    
-  },
-  deleteItemText: {
-    color: "#1b1a17",
-    paddingHorizontal: 10,
-    fontSize: 14,
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-  },
 });
