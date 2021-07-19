@@ -44,9 +44,9 @@ export default function App() {
         <Text style={styles.sectionTitle}>Components List</Text>
         <View style={styles.items}>
           {/* Here will go the components*/}
-          {itemItems.map((items, index) => {
+          {itemItems.map((item, index) => {
             return (
-                  <Item key={index} text={items} handleDelete={()=> deleteItem(index)} /> 
+                  <Item key= {index} text={item+' index--> '+index} handleDelete={()=> deleteItem(index)}/> 
             );
           })}
         </View>

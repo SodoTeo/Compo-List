@@ -4,6 +4,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 
 
 const Item =(props)=>{
+   
     const rightSwipe = (progress, dragX) => {
         const scale = dragX.interpolate({
           inputRange: [0, 100],
@@ -12,12 +13,12 @@ const Item =(props)=>{
         });
         return (
             <View style={styles.deleteItem}  >
-              <Text style={styles.deleteItemText}>Delete</Text>
+              <Text style={styles.deleteItemText}>{props.text}Delete</Text>
             </View>
         );
     };
     return(
-        <Swipeable renderRightActions={rightSwipe} onSwipeableRightOpen={props.handleDelete}>
+        <Swipeable renderRightActions={rightSwipe} onSwipeableRightOpen={props.handleDelete} >
         <View style={styles.item}>
             <View style={styles.itemLeft}>
                 <View style={styles.splash}>{/*TODO: Component splash ie mobo*/}</View>
