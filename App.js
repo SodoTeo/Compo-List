@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import Item, { Task } from "./components/Item";
 
-
 export default function App() {
   const [item, setItem] = useState();
   const [itemItems, setItemItems] = useState([]);
@@ -27,14 +26,9 @@ export default function App() {
     itemsCopy.splice(index, 1);
     setItemItems(itemsCopy);
   };
-  
 
-  const rightSwipeActions = () => {
-    return (
-        <View  style={styles.deleteItem}  >
-          <Text style={styles.deleteItemText}>Delete</Text>
-        </View>
-    );
+  const generateKey = (pre) => {
+    return `${pre}_${new Date().getTime()}`;
   };
 
   return (
@@ -46,7 +40,11 @@ export default function App() {
           {/* Here will go the components*/}
           {itemItems.map((item, index) => {
             return (
-                  <Item key= {index} text={item+' index--> '+index} handleDelete={()=> deleteItem(index)}/> 
+              <Item
+                key={generateKey(item)}
+                text={item + " index--> " + index}
+                handleDelete={() => deleteItem(index)}
+              />
             );
           })}
         </View>
